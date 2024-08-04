@@ -1,0 +1,96 @@
+{
+  "profiles": [
+    {
+      "name": "John Doe",
+      "title": "Musician",
+      "avatar": "https://img.freepik.com/free-photo/3d-illustration-teenager-with-funny-face-glasses_1142-50955.jpg?size=626&ext=jpg",
+      "artcover": "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fgetwallpapers.com%2Fwallpaper%2Ffull%2F7%2Fa%2F5%2F1204335-album-cover-art-wallpaper-1920x1080-hd-1080p.jpg&f=1&nofb=1&ipt=f8858b94548e7cf56962dfe3dfb954b0775ef3f4a6843323960b8856c9b1f561&ipo=images",
+      "socialLinks": [
+        {
+          "platform": "soundcloud",
+          "link": "https://soundcloud.com/janesmith"
+        },
+        {
+          "platform": "instagram",
+          "link": "https://www.instagram.com/janesmith"
+        },
+        {
+          "platform": "youtube",
+          "link": "https://www.youtube.com/c/janesmith"
+        }
+      ],
+      "likes": 15000
+    },
+    {
+      "name": "Jane Smith",
+      "title": "Fashion Designer",
+      "avatar": "https://img.freepik.com/free-photo/androgynous-avatar-non-binary-queer-person_23-2151100278.jpg?size=626&ext=jpg&ga=GA1.1.1170908441.1717942768&semt=sph",
+      "artcover": "https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcorujamusic.com.br%2Fwp-content%2Fuploads%2F2019%2F06%2Fyes-classic-768x768.jpg&f=1&nofb=1&ipt=9a907687bfb458eca51c700b321927f45b7a6914e0430acf9447cb5ab2e122c1&ipo=images",
+      "socialLinks": [
+        {
+          "platform": "instagram",
+          "link": "https://www.instagram.com/janesmith"
+        },
+        {
+          "platform": "tiktok",
+          "link": "https://www.tiktok.com/@janesmith"
+        },
+        {
+          "platform": "youtube",
+          "link": "https://www.youtube.com/c/janesmith"
+        }
+      ],
+      "likes": 25000
+    },
+    {
+      "name": "Sam Johnson",
+      "title": "Travel Vlogger",
+      "avatar": "https://img.freepik.com/free-photo/3d-illustration-teenager-with-funny-face-glasses_1142-50955.jpg?size=626&ext=jpg",
+      "artcover": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.shortpixel.ai%2Fclient%2Fq_glossy%2Cret_img%2Fhttps%3A%2F%2Fcreativesfeed.com%2Fwp-content%2Fuploads%2F2018%2F08%2FArt-vs-Science-by-Andrew-Fairclough.jpg&f=1&nofb=1&ipt=63e0f88282a3f894d8659b195e97d48cd7758319d4c0f67b83065cb5e5e59e51&ipo=images",
+      "socialLinks": [
+        {
+          "platform": "whatsapp",
+          "link": "https://wa.me/1234567890"
+        },
+        {
+          "platform": "tiktok",
+          "link": "https://www.tiktok.com/@janesmith"
+        },
+        {
+          "platform": "youtube",
+          "link": "https://www.youtube.com/c/janesmith"
+        }
+      ],
+      "likes": 50000
+    },
+    {
+      "name": "Thamsanqa J",
+      "title": "Technical Creative",
+      "avatar": "https://avatars.githubusercontent.com/u/34676152?v=4",
+      "artcover": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcoverartworks.com%2Fwp-content%2Fuploads%2F2020%2F06%2FUNTITLED_2_Preview.jpg&f=1&nofb=1&ipt=559686d51447b2e5b87fc6721444349d4ef8da36cbc0ccd87df08b8602a4e940&ipo=images",
+      "socialLinks": [
+        {
+          "platform": "soundcloud",
+          "link": "https://soundcloud.com/janesmith"
+        },
+        {
+          "platform": "instagram",
+          "link": "https://www.instagram.com/janesmith"
+        },
+        {
+          "platform": "whatsapp",
+          "link": "https://wa.me/1234567890"
+        },
+        {
+          "platform": "tiktok",
+          "link": "https://www.tiktok.com/@janesmith"
+        },
+        {
+          "platform": "youtube",
+          "link": "https://www.youtube.com/c/janesmith"
+        }
+      ],
+      "likes": 50000
+    }
+  ]
+}
