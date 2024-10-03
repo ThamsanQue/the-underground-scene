@@ -2,7 +2,6 @@ import {
   integer,
   pgTable,
   primaryKey,
-  serial,
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
@@ -19,9 +18,9 @@ export const users = pgTable("users", {
   email: text("email").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   title: text("title"),
-  avatar: text("avatar"),
+  country: text("country"),
+  image: text("image"),
   artcover: text("artcover"),
-  likes: integer("likes").notNull().default(0),
   createdAt: timestamp("created_at").default(sql`now()`),
 });
 
@@ -79,12 +78,12 @@ export const socialLinks = pgTable("socialLinks", {
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  platform: text("platform").notNull(),
   link: text("link").notNull(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
   socialLinks: many(socialLinks),
+  dropLinks: many(dropLinks),
 }));
 
 export const socialLinksRelations = relations(socialLinks, ({ one }) => ({
@@ -94,14 +93,23 @@ export const socialLinksRelations = relations(socialLinks, ({ one }) => ({
   }),
 }));
 
-export const linkPosts = pgTable("link_posts", {
+export const dropLinks = pgTable("dropLinks", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => genId("usr")),
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  url: text("url").notNull(),
+  urls: text("urls").array().notNull(),
+  title: text("title").notNull(),
   description: text("description"),
+  likes: integer("likes").notNull().default(0),
   postedAt: timestamp("posted_at").notNull().defaultNow(),
 });
+
+export const dropLinksRelations = relations(dropLinks, ({ one }) => ({
+  user: one(users, {
+    fields: [dropLinks.userId],
+    references: [users.id],
+  }),
+}));

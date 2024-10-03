@@ -5,6 +5,8 @@ import { authConfig } from "./config";
 export const {
   handlers: { GET, POST },
   auth,
+  signIn,
+  signOut,
 } = NextAuth({
   adapter: drizzleAdapter,
   ...authConfig,

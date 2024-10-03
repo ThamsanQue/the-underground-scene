@@ -1,14 +1,34 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "./ui/button";
 import { ModeToggle } from "./theme-toggle";
-import { signIn } from "next-auth/react";
 import { SocialLinks } from "./socialIcons";
 import Image from "next/image";
 import TUS from "../assets/icons/tus2.svg";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import MagicLinkSignIn from "./sign-in";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import useArtistStore from "@/zustand/useArtistStore";
+import { placeholderImage } from "@/lib/utils";
 
 export default function NavBar() {
+  const user = useCurrentUser();
+  const artistProfile = useArtistStore((state) => state.artistProfile);
+  const AuthButton = () => {
+    if (user && user?.id) {
+      return (
+        <Link href={`/dashboard/${user?.id}`}>
+          <Avatar className="w-9 h-9 md:w-10 md:h-10 border-2 border-primary cursor-pointer hover:border-blue-500 transition duration-300 ease-in-out">
+            <AvatarImage src={artistProfile?.image || placeholderImage} />
+            <AvatarFallback>{user?.email?.charAt(0) || "?"}</AvatarFallback>
+          </Avatar>
+        </Link>
+      );
+    }
+
+    return <MagicLinkSignIn />;
+  };
+
   return (
     <header className="flex h-20 w-full shrink-0 items-center justify-center px-4 md:px-6">
       <div className="flex items-center mt-4">
@@ -23,13 +43,7 @@ export default function NavBar() {
       <div className="ml-auto flex items-center gap-4">
         <SocialLinks />
         <ModeToggle />
-        <Button
-          variant="default"
-          className="inline-flex h-9 items-center justify-center rounded-md bg-[#ffa600] px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-[#ffc14d] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#ffe4b3] disabled:pointer-events-none disabled:opacity-50 text-secondary"
-          onClick={() => signIn()}
-        >
-          Join Now
-        </Button>
+        <AuthButton />
       </div>
     </header>
   );

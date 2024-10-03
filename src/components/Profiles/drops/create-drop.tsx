@@ -19,13 +19,181 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { formSchema } from "@/lib/types/types";
+import { addDrop } from "@/server-actions/artist-drops";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { MinusCircle, PlusCircle } from "lucide-react";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
-export const CreateDrop = () => {
+interface DropProps {
+  userId: string | undefined;
+}
+export const CreateDrop = ({ userId }: DropProps) => {
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const [isPending, startTransition] = useTransition();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      urls: [{ id: Date.now().toString(), value: "" }],
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    const payload = {
+      userId,
+      ...values,
+      urls: values.urls?.map((url) => url.value),
+    };
+    startTransition(() => {
+      addDrop(payload)
+        .then((res) => {
+          if (res.error) {
+            toast.error(res.error, {
+              position: isDesktop ? "bottom-right" : "top-center",
+            });
+          }
+
+          if (res.success) {
+            toast.success(res.success, {
+              position: isDesktop ? "bottom-right" : "top-center",
+            });
+          }
+          form.reset();
+        })
+        .catch((err) => {
+          console.error(err, "err");
+          toast.error("Something went wrong", {
+            position: isDesktop ? "bottom-right" : "top-center",
+          });
+        });
+    });
+  }
+
+  const DropForm = () => {
+    return (
+      <div className="grid gap-6 py-6 m-4">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} id="drop-form">
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem className="mb-4">
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter the title of the drop"
+                      {...field}
+                      className="resize-none"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Tell the world about the drop"
+                      className="resize-none"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="urls"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Drop Links</FormLabel>
+                  <div className="col-span-3 grid gap-4">
+                    {field.value &&
+                      field.value.map((link, index) => (
+                        <div key={link.id} className="flex items-center">
+                          <FormControl>
+                            <Input
+                              placeholder="Add links to the drop!"
+                              value={link.value}
+                              onChange={(e) => {
+                                const newLinks = [...(field.value || [])];
+                                newLinks[index] = {
+                                  ...newLinks[index],
+                                  value: e.target.value,
+                                };
+                                field.onChange(newLinks);
+                              }}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                          {field.value && field.value.length > 1 && (
+                            <Button
+                              type="button"
+                              onClick={() => {
+                                const newLinks = (field.value || []).filter(
+                                  (_, i) => i !== index
+                                );
+                                field.onChange(newLinks);
+                              }}
+                              variant={"outline"}
+                              size={"icon"}
+                              className="ml-2"
+                            >
+                              <MinusCircle className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
+                      ))}
+                    <Button
+                      type="button"
+                      onClick={() => {
+                        const newLink = {
+                          id: Date.now().toString(),
+                          value: "",
+                        };
+                        field.onChange([...(field.value || []), newLink]);
+                      }}
+                      variant={"outline"}
+                      className="mt-2 mx-auto w-full"
+                      disabled={(field.value || []).length >= 3}
+                    >
+                      <PlusCircle className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+      </div>
+    );
+  };
+
   return (
     <>
       {isDesktop ? (
@@ -41,27 +209,11 @@ export const CreateDrop = () => {
                 of time.
               </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-6 py-6">
-              <div>
-                <Label htmlFor="username" className="text-right">
-                  Link
-                </Label>
-                <Input
-                  id="username"
-                  placeholder="Enter the link to your drop"
-                  className="col-span-3"
-                  type="url"
-                />
-              </div>
-              <div>
-                <Label htmlFor="title" className="text-right">
-                  Description
-                </Label>
-                <Textarea placeholder="Tell the people what the drop is about" />
-              </div>
-            </div>
+            <DropForm />
             <DialogFooter>
-              <Button type="submit">Drop</Button>
+              <Button type="submit" form="drop-form" disabled={isPending}>
+                Drop
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -78,27 +230,11 @@ export const CreateDrop = () => {
                 of time.
               </DrawerDescription>
             </DrawerHeader>
-            <div className="grid gap-6 p-6">
-              <div>
-                <Label htmlFor="username" className="text-right">
-                  Link
-                </Label>
-                <Input
-                  id="username"
-                  placeholder="Enter the link to your drop"
-                  className="col-span-3"
-                  type="url"
-                />
-              </div>
-              <div>
-                <Label htmlFor="title" className="text-right">
-                  Description
-                </Label>
-                <Textarea placeholder="Tell the people what the drop is about" />
-              </div>
-            </div>
+            <DropForm />
             <DrawerFooter>
-              <Button type="submit">Drop</Button>
+              <Button type="submit" form="drop-form">
+                Drop
+              </Button>
             </DrawerFooter>
           </DrawerContent>
         </Drawer>

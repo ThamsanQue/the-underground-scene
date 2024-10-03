@@ -1,12 +1,13 @@
+import { fileURLToPath } from "node:url";
+import createJiti from "jiti";
+const jiti = createJiti(fileURLToPath(import.meta.url));
+
+jiti("./src/env.ts");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "images3.alphacoders.com",
-      "toppng.com",
-      "img.freepik.com",
-      "pexels.com",
-    ],
+    domains: ["images.pexels.com", "storage.streetcrisis.online"],
   },
 };
 
