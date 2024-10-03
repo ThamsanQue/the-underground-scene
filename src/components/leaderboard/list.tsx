@@ -109,9 +109,12 @@ const TopArtists = ({ artists }: TopArtistsProps) => {
                 key={artist.id}
                 className="flex justify-between items-center p-4 dark:bg-secondary/30 bg-secondary rounded-lg mb-2"
               >
-                <span className="text-primary font-semibold text-sm md:text-md">
-                  {index + 2}
-                </span>
+                {topArtist && (
+                  <span className="text-primary font-semibold text-sm md:text-md">
+                    {index + 2}
+                  </span>
+                )}
+
                 <LeadderboardProfiles artist={artist} />
                 <span className="flex-grow ml-4 text-sm md:text-md">
                   @{artist.name}
