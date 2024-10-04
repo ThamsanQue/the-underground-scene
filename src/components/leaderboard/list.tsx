@@ -102,30 +102,31 @@ const TopArtists = ({ artists }: TopArtistsProps) => {
       <section className="overflow-y-auto h-[400px] custom-scrollbar">
         <div className="space-y-4">
           {artists
-            .filter((artist) => artist?.id !== topArtist?.id) // Exclude the topArtist
-            .sort((a, b) => b.dropLinks.length - a.dropLinks.length) // Sort in descending order
+            .filter((artist) => artist?.id !== topArtist?.id)
+            .sort((a, b) => b.dropLinks.length - a.dropLinks.length)
             .map((artist, index) => (
               <div
                 key={artist.id}
-                className="flex justify-between items-center p-4 dark:bg-secondary/30 bg-secondary rounded-lg mb-2"
+                className="flex items-center p-4 dark:bg-secondary/30 bg-secondary rounded-lg"
               >
                 {topArtist && (
-                  <span className="text-primary font-semibold text-sm md:text-md">
+                  <span className="text-primary font-semibold text-sm md:text-md w-6">
                     {index + 2}
                   </span>
                 )}
-
                 <LeadderboardProfiles artist={artist} />
-                <span className="flex-grow ml-4 text-sm md:text-md">
-                  @{artist.name}
-                </span>
-                <span className="flex-grow justify-center text-sm md:text-md text-muted-foreground font-semibold">
-                  {artist.title}
-                </span>
-                <FlameIcon className="w-4 h-4 md:w-5 md:h-5 fill-primary stroke-black dark:stroke-white inline-block stroke-2 mr-1" />
-                <span className="text-primary text-sm md:text-md">
-                  {artist.dropLinks.length}
-                </span>
+                <div className="flex flex-grow items-center space-x-4 ml-4">
+                  <span className="text-sm md:text-md">@{artist.name}</span>
+                  <span className="text-sm md:text-md text-muted-foreground font-semibold flex-grow">
+                    {artist.title}
+                  </span>
+                  <div className="flex items-center">
+                    <FlameIcon className="w-4 h-4 md:w-5 md:h-5 fill-primary stroke-black dark:stroke-white stroke-2 mr-1" />
+                    <span className="text-primary text-sm md:text-md">
+                      {artist.dropLinks.length}
+                    </span>
+                  </div>
+                </div>
               </div>
             ))}
         </div>
