@@ -8,18 +8,16 @@ import TUS from "../assets/icons/tus2.svg";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import MagicLinkSignIn from "./sign-in";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
-import useArtistStore from "@/zustand/useArtistStore";
 import { placeholderImage } from "@/lib/utils";
 
 export default function NavBar() {
   const user = useCurrentUser();
-  const artistProfile = useArtistStore((state) => state.artistProfile);
   const AuthButton = () => {
     if (user && user?.id) {
       return (
         <Link href={`/dashboard/${user?.id}`}>
           <Avatar className="w-9 h-9 md:w-10 md:h-10 border-2 border-primary cursor-pointer hover:border-blue-500 transition duration-300 ease-in-out">
-            <AvatarImage src={artistProfile?.image || placeholderImage} />
+            <AvatarImage src={user?.image || placeholderImage} />
             <AvatarFallback>{user?.email?.charAt(0) || "?"}</AvatarFallback>
           </Avatar>
         </Link>

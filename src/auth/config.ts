@@ -67,12 +67,16 @@ export const authConfig = {
     async jwt({ token, user }) {
       if (user && user.id) {
         token.id = user.id;
+        token.name = user.name;
+        token.picture = user.image;
       }
       return token;
     },
     async session({ session, token }) {
       if (token && token.id) {
         session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.image = token.picture;
       }
       return session;
     },
