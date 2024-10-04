@@ -8,6 +8,7 @@ import {
   FaYoutube,
   FaDiscord,
   FaGithub,
+  FaSpotify,
 } from "react-icons/fa";
 import { BookUser } from "lucide-react";
 import {
@@ -45,6 +46,11 @@ export const SocialIcons = ({ link }: { link: string }) => {
         return (
           <FaYoutube className="h-5 w-5 text-[#adb5bd] dark:text-white hover:text-primary dark:hover:text-primary" />
         );
+      case "spotify":
+        return (
+          <FaSpotify className="h-5 w-5 text-[#adb5bd] dark:text-white hover:text-primary dark:hover:text-primary" />
+        );
+
       default:
         return null;
     }

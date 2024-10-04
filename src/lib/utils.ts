@@ -28,6 +28,7 @@ export const getPlatformFromLink = (link: string) => {
   if (link.includes("whatsapp.com")) return "whatsapp";
   if (link.includes("tiktok.com")) return "tiktok";
   if (link.includes("youtube.com")) return "youtube";
+  if (link.includes("spotify.com")) return "spotify";
   return null;
 };
 
