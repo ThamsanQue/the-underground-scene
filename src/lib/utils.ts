@@ -31,7 +31,7 @@ export const getPlatformFromLink = (link: string) => {
     return "youtube";
   }
   if (link.includes("spotify.com")) return "spotify";
-  return null;
+  return "default";
 };
 
 export const createHeatMapData = (

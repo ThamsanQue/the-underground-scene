@@ -9,6 +9,7 @@ import {
   FaDiscord,
   FaGithub,
   FaSpotify,
+  FaLink,
 } from "react-icons/fa";
 import { BookUser } from "lucide-react";
 import {
@@ -52,7 +53,9 @@ export const SocialIcons = ({ link }: { link: string }) => {
         );
 
       default:
-        return null;
+        return (
+          <FaLink className="h-5 w-5 text-[#adb5bd] dark:text-white hover:text-primary dark:hover:text-primary" />
+        );
     }
   };
 
@@ -88,7 +91,16 @@ export const SocialLinks = () => {
             Instagram
           </Link>
         </DropdownMenuItem>
-
+        <DropdownMenuItem>
+          <Link
+            href="https://chat.whatsapp.com/BCQSUmNxsiJ1mT3Evwi238"
+            className="flex items-center gap-2"
+            target="_blank"
+          >
+            <FaWhatsapp className="h-4 w-4" />
+            WhatsApp Group
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem>
           <Link
             href="https://github.com/ThamsanQue/the-underground-scene"
