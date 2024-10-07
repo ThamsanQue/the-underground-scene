@@ -137,7 +137,7 @@ export default function MagicLinkSignIn() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="default">Sign In</Button>
+        <Button variant="default">Pull Up</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
