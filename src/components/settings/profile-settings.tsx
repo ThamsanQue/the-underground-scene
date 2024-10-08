@@ -111,7 +111,7 @@ const ProfileForm = memo(
         ) {
           setTimeout(() => {
             target.scrollIntoView({ behavior: "smooth", block: "center" });
-          }, 100);
+          }, 100); // Small delay to ensure the keyboard is fully open
         }
       };
 
@@ -127,9 +127,12 @@ const ProfileForm = memo(
       };
     }, []);
     return (
-      <div ref={formRef} className="flex flex-col h-full">
+      <div
+        ref={formRef}
+        className="grid gap-6 py-6 m-4 overflow-y-auto max-h-[calc(100vh-120px)]"
+      >
         <Form {...form}>
-          <form className="flex-grow overflow-y-auto space-y-6 p-4 pb-20">
+          <form>
             <FormField
               control={form.control}
               name="name"
