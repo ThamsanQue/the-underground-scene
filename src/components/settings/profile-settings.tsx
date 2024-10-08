@@ -111,7 +111,7 @@ const ProfileForm = memo(
         ) {
           setTimeout(() => {
             target.scrollIntoView({ behavior: "smooth", block: "center" });
-          }, 100); // Small delay to ensure the keyboard is fully open
+          }, 100);
         }
       };
 
@@ -129,7 +129,7 @@ const ProfileForm = memo(
     return (
       <div
         ref={formRef}
-        className="grid gap-6 py-6 m-4 overflow-y-auto max-h-[calc(100vh-120px)]"
+        className="grid gap-6 py-6 m-4 overflow-y-auto max-h-[calc(100vh-100px)]"
       >
         <Form {...form}>
           <form>
