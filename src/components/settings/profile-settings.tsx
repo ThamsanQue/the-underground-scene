@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { z } from "zod";
-import { memo, useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Disc3, MinusCircle, PlusCircle } from "lucide-react";
 import FileUpload, {
   DataFromFileUpload,
@@ -100,8 +100,37 @@ const ProfileForm = memo(
     dataFromFileUpload,
     modalTrigger,
   }: ProfileFormProps) => {
+    const formRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const handleFocus = (event: FocusEvent) => {
+        const target = event.target as HTMLElement;
+        if (
+          target instanceof HTMLInputElement ||
+          target instanceof HTMLTextAreaElement
+        ) {
+          setTimeout(() => {
+            target.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 100); // Small delay to ensure the keyboard is fully open
+        }
+      };
+
+      const formElement = formRef.current;
+      if (formElement) {
+        formElement.addEventListener("focus", handleFocus, true);
+      }
+
+      return () => {
+        if (formElement) {
+          formElement.removeEventListener("focus", handleFocus, true);
+        }
+      };
+    }, []);
     return (
-      <div className={`grid gap-6 py-6 m-4`}>
+      <div
+        ref={formRef}
+        className={`grid gap-6 py-6 m-4 overflow-y-auto max-h-[calc(100vh-120px)]`}
+      >
         <Form {...form}>
           <form>
             <FormField

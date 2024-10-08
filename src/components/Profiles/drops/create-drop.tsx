@@ -34,7 +34,7 @@ import { DropData, formSchema } from "@/lib/types/types";
 import { addDrop } from "@/server-actions/artist-drops";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Disc3, MinusCircle, PlusCircle } from "lucide-react";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useFieldArray, UseFieldArrayAppend, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -51,8 +51,37 @@ interface DropFormProps {
 }
 
 const DropForm = memo(({ form, fields, append, remove }: DropFormProps) => {
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleFocus = (event: FocusEvent) => {
+      const target = event.target as HTMLElement;
+      if (
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement
+      ) {
+        setTimeout(() => {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 100); // Small delay to ensure the keyboard is fully open
+      }
+    };
+
+    const formElement = formRef.current;
+    if (formElement) {
+      formElement.addEventListener("focus", handleFocus, true);
+    }
+
+    return () => {
+      if (formElement) {
+        formElement.removeEventListener("focus", handleFocus, true);
+      }
+    };
+  }, []);
   return (
-    <div className="grid gap-6 py-6 m-4">
+    <div
+      ref={formRef}
+      className="grid gap-6 py-6 m-4 overflow-y-auto max-h-[calc(100vh-120px)]"
+    >
       <Form {...form}>
         <form>
           <FormField
