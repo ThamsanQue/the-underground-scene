@@ -110,18 +110,7 @@ const ProfileForm = memo(
           target instanceof HTMLTextAreaElement
         ) {
           setTimeout(() => {
-            const rect = target.getBoundingClientRect();
-            const isVisible =
-              rect.top >= 0 &&
-              rect.left >= 0 &&
-              rect.bottom <=
-                (window.innerHeight || document.documentElement.clientHeight) &&
-              rect.right <=
-                (window.innerWidth || document.documentElement.clientWidth);
-
-            if (!isVisible) {
-              target.scrollIntoView({ behavior: "smooth", block: "center" });
-            }
+            target.scrollIntoView({ behavior: "smooth", block: "center" });
           }, 100);
         }
       };
@@ -138,12 +127,9 @@ const ProfileForm = memo(
       };
     }, []);
     return (
-      <div
-        ref={formRef}
-        className={`grid gap-6 py-6 m-4 overflow-y-auto max-h-[calc(100vh-120px)]`}
-      >
+      <div ref={formRef} className="flex flex-col h-full">
         <Form {...form}>
-          <form>
+          <form className="flex-grow overflow-y-auto space-y-6 p-4 pb-20">
             <FormField
               control={form.control}
               name="name"
