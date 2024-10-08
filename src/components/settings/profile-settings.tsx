@@ -387,7 +387,7 @@ export const ProfileSettings = ({ userId }: ProfileSettingsProps) => {
               Customize your account settings here.
             </DescriptionComponent>
           </HeaderComponent>
-          <div className="py-4">
+          <div className="py-4 overflow-auto">
             <ProfileForm
               form={form}
               fields={fields}
