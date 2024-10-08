@@ -110,8 +110,19 @@ const ProfileForm = memo(
           target instanceof HTMLTextAreaElement
         ) {
           setTimeout(() => {
-            target.scrollIntoView({ behavior: "smooth", block: "center" });
-          }, 100); // Small delay to ensure the keyboard is fully open
+            const rect = target.getBoundingClientRect();
+            const isVisible =
+              rect.top >= 0 &&
+              rect.left >= 0 &&
+              rect.bottom <=
+                (window.innerHeight || document.documentElement.clientHeight) &&
+              rect.right <=
+                (window.innerWidth || document.documentElement.clientWidth);
+
+            if (!isVisible) {
+              target.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+          }, 100);
         }
       };
 
